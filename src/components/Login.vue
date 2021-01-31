@@ -1,9 +1,10 @@
 <template>
   <div id="login">
+    
     <form>
       <div class="form-group">
         <label for="username">用户名</label>
-        <input type="email" class="form-control" id="username" placeholder="用户名" v-model="user.name">
+        <input type="email" class="form-control" id="username" placeholder="用户名" v-model="user.username">
       </div>
       <div class="form-group">
         <label for="password">密码</label>
@@ -12,6 +13,7 @@
       <button type="submit" class="btn btn-default" @click='login'>登录</button>
     </form>
   </div>
+  
 </template>
 
 <script>
@@ -27,28 +29,29 @@
       ...mapMutations(['changeLogin']),
       login() {
         console.log(this.user);
-        this.$http.get('http://localhost:9001/api/login/loginIn?username=' + this.user.name + '&password=' + this.user.password).then((res) => {
+        this.$http.post('http://localhost:9001/userLogin',this.user).then((res) => {
           console.log(res.data);
           if (res.data.code === 200) {
-            _this.userToken = 'Bearer ' + res.data.data.body.token;
+            // localStorage.clear()
+            sessionStorage.clear()
+            sessionStorage.setItem('userid',JSON.stringify(res.data.data.userId))
+            sessionStorage.setItem('username',JSON.stringify(res.data.data.username))
+            sessionStorage['token']=JSON.stringify(res.data.data.token)
+            // _this.userToken = 'Bearer ' + res.data.data.body.token;
             // 将用户token保存到vuex中
-            _this.changeLogin({ Authorization: _this.userToken });
+            // _this.changeLogin({ Authorization: _this.userToken });
             this.$router.push({
               path: '/punchCard'
             })
+            alert("登录成功")
           }
         })
       }
-    },
-    components: {},
-    created() {
-
-    }
   }
+  };
 </script>
 
 
-<style>
-
+<style scoped>
 
 </style>
