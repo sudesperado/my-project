@@ -19,3 +19,16 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+// 添加请求拦截器，在请求头中加token
+axios.interceptors.request.use(
+    config => {
+      if (localStorage.getItem('Access-Token')) {
+        config.headers.Authorization = localStorage.getItem('Access-Token');
+        config.headers.Token = localStorage.getItem('Access-Token');
+      }
+      return config;
+    },
+    error => {
+      return Promise.reject(error);
+    });

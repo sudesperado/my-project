@@ -131,7 +131,7 @@
             item.week = this.input;
         });
         console.log(this.tableData)
-        this.$http.post('http://localhost:10010/api/punchCard/save',this.tableData).then((resp)=>{
+        this.$http.post('api/punchCard/save',this.tableData).then((resp)=>{
             console.log(resp)
             alert(resp.data.message)
         })
@@ -150,7 +150,7 @@
       },
       searchByWeek() {
              let list = [ ]
-      this.$http.get('http://localhost:10010/api/punchCard/queryAll?week='+this.input).then((resp)=>{
+      this.$http.get('api/punchCard/queryAll?week='+this.input).then((resp)=>{
           if(resp.data.code === 200){
               console.log(resp)
               list = resp.data.data
@@ -195,7 +195,7 @@
             }
         ).then(()=>{
         console.log( this.tableData[index].id)   
-        this.$http.get('http://localhost:10010/api/punchCard/del?ids='+this.tableData[index].id).then((resp)=>{
+        this.$http.get('api/punchCard/del?ids='+this.tableData[index].id).then((resp)=>{
             if(resp.data.code === 200){
                 alert(resp.data.message)
             }
@@ -213,7 +213,7 @@
     components: {},
     created() {
         let list = [ ]
-      this.$http.get('http://localhost:10010/api/punchCard/queryAll?week='+this.input).then((resp)=>{
+      this.$http.get('punchCard/queryAll?week='+this.input).then((resp)=>{
           if(resp.data.code === 200){
               console.log(resp)
               list = resp.data.data

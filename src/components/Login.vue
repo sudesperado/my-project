@@ -32,14 +32,22 @@
         this.$http.post('http://localhost:9001/userLogin',this.user).then((res) => {
           console.log(res.data);
           if (res.data.code === 200) {
-            // localStorage.clear()
-            sessionStorage.clear()
-            sessionStorage.setItem('userid',JSON.stringify(res.data.data.userId))
-            sessionStorage.setItem('username',JSON.stringify(res.data.data.username))
-            sessionStorage['token']=JSON.stringify(res.data.data.token)
-            // _this.userToken = 'Bearer ' + res.data.data.body.token;
+             localStorage.clear()
+            // sessionStorage.clear()
+            // sessionStorage.setItem('userid',JSON.stringify(res.data.data.userId))
+            // sessionStorage.setItem('username',JSON.stringify(res.data.data.username))
+            // sessionStorage['token']=JSON.stringify(res.data.data.token)
+            // _this.userToken = 'Bearer ' + res.data.data.token;
             // 将用户token保存到vuex中
-            // _this.changeLogin({ Authorization: _this.userToken });
+            try {
+              //  _this.changeLogin({ Authorization: _this.userToken });
+              localStorage.clear()
+              localStorage.setItem('userid',res.data.data.userId)
+            localStorage.setItem('username',res.data.data.username)
+            localStorage['Access-Token']=res.data.data.token
+            } catch (error) {
+              console.log(error)
+            }
             this.$router.push({
               path: '/punchCard'
             })
