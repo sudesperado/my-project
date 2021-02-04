@@ -49,7 +49,7 @@
               console.log(error)
             }
             this.$router.push({
-              path: '/punchCard'
+              path: '/home'
             })
             alert("登录成功")
           }
