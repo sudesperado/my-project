@@ -212,8 +212,9 @@
     },
     components: {},
     created() {
+      config.headers.Token = localStorage.getItem('Access-Token');
         let list = [ ]
-      this.$http.get('punchCard/queryAll?week='+this.input).then((resp)=>{
+      this.$http.get('api/punchCard/queryAll?week='+this.input).then((resp)=>{
           if(resp.data.code === 200){
               console.log(resp)
               list = resp.data.data
